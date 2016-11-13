@@ -10,6 +10,7 @@ import android.view.View;
 
 /**
  * Created by 99210 on 2016/11/13.
+ * 画了个圆，圆下面写了字
  */
 
 public class CustomView1 extends View {
