@@ -12,4 +12,10 @@
         <attr name="default_text_size" format="dimension"></attr>
     </declare-styleable>
 
+    <declare-styleable name="BarChart">
+        <attr name="bottom_textsize" format="dimension"></attr>   <!--X轴字体大小-->
+        <attr name="bar_width" format="dimension"></attr>    <!--单个柱宽度-->
+        <attr name="bar_interval" format="dimension"></attr>      <!--柱之间间隔-->
+    </declare-styleable>
+
 </resources>

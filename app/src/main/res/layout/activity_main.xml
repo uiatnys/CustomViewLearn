@@ -9,8 +9,14 @@
     android:orientation="vertical"
     tools:context="com.example.com.customviewlearn.MainActivity">
 
-   <com.example.com.customviewlearn.CustomView1
-       android:layout_width="300dp"
-       android:layout_height="300dp"
-       app:default_text_size="16dp"/>
+    <com.example.com.customviewlearn.BarChart.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:bottom_textsize="15dp"
+        app:bar_width="10dp"
+        app:bar_interval="5dp"
+        android:background="#FFE4B5"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.com.customviewlearn;
+package com.example.com.customviewlearn.Test;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.com.customviewlearn.R;
 
 /**
  * Created by 99210 on 2016/11/13.
@@ -43,7 +45,7 @@ public class CustomView1 extends View {
     private void init(Context context,AttributeSet attrs){
         paint=new Paint();
         if (attrs!=null){
-            TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.CustomView1);
+            TypedArray typedArray=context.obtainStyledAttributes(attrs, R.styleable.CustomView1);
             defaultTextSize=typedArray.getDimensionPixelSize(R.styleable.CustomView1_default_text_size,30);
         }
     }
