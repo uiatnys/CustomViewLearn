@@ -13,9 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bottom_textsize="15dp"
-        app:bar_width="10dp"
-        app:bar_interval="5dp"
-        android:background="#FFE4B5"
+        app:bar_width="13dp"
+        app:bar_interval="8dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"/>

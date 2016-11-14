@@ -24,8 +24,12 @@ public class BarChart extends View {
     private int barInterval;  //柱间隔
     private int yLineLength;   //Y轴长度
     private int xLineLength;    //X轴长度
+    private int yRelativeValue;   //原点的相对y值
+    private int xRelativeValue;   //原点的相对X值
 
     private Paint paint;
+
+    private final int[] colors = new int[]{0xff32CD32,0xffFFD700,0xffFF3030,0xff1E90FF};
 
     public BarChart(Context context) {
         super(context);
@@ -61,11 +65,28 @@ public class BarChart extends View {
         super.onDraw(canvas);
         paint.setColor(0xff000000);
         paint.setStrokeWidth(1.5f);
+        yLineLength=(int)(height*0.9f)-getPaddingTop();
+        xLineLength=width-getPaddingRight()-getPaddingLeft()+50;
+        yRelativeValue = (int)(height*0.9f);
+        xRelativeValue = getPaddingLeft()+50;
         //绘制坐标轴
-        canvas.drawLine(getPaddingLeft()+50,(int)(height*0.9f),width-getPaddingRight(),(int)(height*0.9f),paint);
-        canvas.drawLine(getPaddingLeft()+50,getPaddingTop(),getPaddingLeft()+50,(int)(height*0.9f),paint);
-        for (int i=0;i<4;i++){
-            paint.setColor(0xff7FFFD4);
+        canvas.drawLine(xRelativeValue,yRelativeValue,width-getPaddingRight(),yRelativeValue,paint);
+        canvas.drawLine(xRelativeValue,getPaddingTop(),xRelativeValue,yRelativeValue,paint);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
+        float l=xRelativeValue+barInterval;
+        float r=xRelativeValue+barInterval+barWidth;
+        //绘制柱状图
+        for (int j=0;j<4;j++) {
+            for (int i = 1; i <= 4; i++) {
+                paint.setColor(colors[i - 1]);
+                canvas.drawRect(l
+                        , yRelativeValue - getRandom() * 10
+                        , r
+                        , yRelativeValue, paint);
+                l = r + barInterval;
+                r = r + barInterval + barWidth;
+            }
         }
     }
 
