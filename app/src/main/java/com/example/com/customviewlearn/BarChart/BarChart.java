@@ -6,14 +6,23 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.com.customviewlearn.R;
 
-import java.util.Random;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by WangZH on 2016/11/14.
+ * 效果：柱状图可点击
+ * 2016-11.15已知问题：
+ * 柱状图的点击和柱状图的滑动只能二选一，原因是滑动后偏移与onDraw未处理好
+ * 使用滑动功能： // BarChart.this.scrollBy((int) (distanceX * scroll_rate), 0);  这个方法取消注释，同时注释onSingleTapUp中的内容
  */
 
 public class BarChart extends View {
@@ -27,6 +36,13 @@ public class BarChart extends View {
     private int xLineLength;    //X轴长度
     private int yRelativeValue;   //原点的相对y值
     private int xRelativeValue;   //原点的相对X值
+    private int offset_x = 0;		// 移动的时候 x轴方向上 的偏移量  获取 点击区域的时候用
+    private double scroll_rate = 0.7;//拖动灵敏度
+    private int currentTouchIndexX=0;      //当前点击的柱的x位置
+    private int currentTouchIndexY=0;      //当前点击的柱的y高度
+
+    private GestureDetector mGestureListener = null;
+    private Map<Integer,Integer> values;
 
     private Paint paint;
     private TextPaint textPaint;
@@ -52,6 +68,11 @@ public class BarChart extends View {
         }
         paint = new Paint();
         textPaint=new TextPaint();
+        mGestureListener = new GestureDetector(new MyGestureListener());
+        values=new LinkedHashMap<>();
+        for (int i=1;i<16;i++){
+            values.put(i,getRandom());
+        }
     }
 
     @Override
@@ -99,21 +120,75 @@ public class BarChart extends View {
             }
         }
         //绘制柱状图
-        int index=0;
-        for (int j=0;j<4;j++) {
-            for (int i = 1; i <= 4; i++) {
-                paint.setColor(colors[i - 1]);
-                canvas.drawRect(l
-                        , yRelativeValue - getRandom()
-                        , r
-                        , yRelativeValue, paint);
-                index += 1;
-                canvas.drawText(index+"",l,yRelativeValue+35,textPaint);
-                l = r + barInterval;
-                r = r + barInterval + barWidth;
+        Iterator it=values.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry entry= (Map.Entry) it.next();
+            if ((yRelativeValue -(int)entry.getValue())<currentTouchIndexY&&l<currentTouchIndexX&&r>currentTouchIndexX){
+                paint.setColor(0xff8B4513);
+                canvas.drawText(entry.getKey()+":"+entry.getValue(),l-15,yRelativeValue -(int)entry.getValue()-30,textPaint);
+            }else{
+                paint.setColor(colors[(int)(entry.getKey())%4]);
             }
+            canvas.drawRect(l
+                    , yRelativeValue -(int)entry.getValue()
+                    , r
+                    , yRelativeValue, paint);
+            canvas.drawText(entry.getKey()+"",l,yRelativeValue+35,textPaint);
+            l = r + barInterval;
+            r = r + barInterval + barWidth;
         }
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(null != mGestureListener){
+            return mGestureListener.onTouchEvent(event);
+        }
+        return true;
+    }
+
+    /**
+     * 触摸拖动
+     *
+     */
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2,
+                                float distanceX, float distanceY) {
+            offset_x = offset_x + (int) (distanceX * scroll_rate);
+            Log.e("onScroll","x:  "+offset_x);
+            // BarChart.this.scrollBy((int) (distanceX * scroll_rate), 0);
+            return true;
+        }
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            return true;
+        }
+        @Override
+        public void onShowPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            int x= (int) e.getRawX();
+            int y= (int) e.getY();
+            currentTouchIndexY=y;
+            int touchX=x+offset_x;//-xRelativeValue; //矫正触摸位置，设置模拟触摸位置相对于第一个柱子的右边位置
+            if (touchX-barInterval<barWidth&&touchX-barInterval>0){
+                Log.e("touch",1+"");
+            }else if (touchX-barInterval>0){
+                Log.e("touch",touchX/(barWidth+barInterval)+1+"");
+            }
+            currentTouchIndexX=touchX;
+            invalidate();
+            return true;
+        }
     }
 
     /**

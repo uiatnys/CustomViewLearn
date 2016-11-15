@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.com.customviewlearn.MainActivity">
 
-    <com.example.com.customviewlearn.BarChart.BarChart
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:bottom_textsize="15dp"
-        app:bar_width="13dp"
-        app:bar_interval="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp"/>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_1"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="BarChart"/>
+        <TextView
+            android:text="带点击提示，可滑动（滑动与点击功能互相冲突，未修复）"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CDCDB4"/>
+    </LinearLayout>
+</ScrollView>
