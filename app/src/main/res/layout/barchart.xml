@@ -10,6 +10,9 @@
         app:bottom_textsize="15dp"
         app:bar_width="13dp"
         app:bar_interval="8dp"
+        app:scrollable="true"
+        app:chart_backgroudcolor="@color/white"
+        app:touchable="false"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"/>
