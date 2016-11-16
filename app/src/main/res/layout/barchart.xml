@@ -5,15 +5,43 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
     <com.example.com.customviewlearn.BarChart.BarChart
+        android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bottom_textsize="15dp"
         app:bar_width="13dp"
         app:bar_interval="8dp"
-        app:scrollable="true"
+        app:scrollable="false"
         app:chart_backgroudcolor="@color/white"
         app:touchable="false"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"/>
+
+    <LinearLayout
+        android:paddingTop="0dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_scroll"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="可滑动"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_click"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="可点击"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_notnull"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="不可点击不可滑动"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

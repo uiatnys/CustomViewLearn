@@ -19,10 +19,10 @@ import java.util.Map;
 
 /**
  * Created by WangZH on 2016/11/14.
- * 效果：柱状图内部可滑动，单个柱可点击，但是滑动和点击不能同时实现（BUG）
+ * 效果：柱状图内部可滑动，单个柱可点击
  * 2016-11.15已知问题：
- * 柱状图的点击和柱状图的滑动只能二选一，原因是滑动后偏移与onDraw未处理好
- * 使用滑动功能： // BarChart.this.scrollBy((int) (distanceX * scroll_rate), 0);  这个方法取消注释，同时注释onSingleTapUp中的内容
+ * 柱状图的点击和柱状图的滑动只能二选一，原因是滑动后偏移与onDraw未处理好 （以解决，需完整测试）
+ * 使用滑动功能： // BarChart.this.scrollBy((int) (distanceX * scroll_rate), 0);  这个方法取消注释，同时注释onSingleTapUp中的内容（以解决，需完整测试）
  */
 
 public class BarChart extends View {
@@ -63,6 +63,14 @@ public class BarChart extends View {
     public BarChart(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context,attrs);
+    }
+
+    public void setCanClickable(boolean clickable){
+        this.touchable=clickable;
+    }
+
+    public void setCanScrollable(boolean scrollable){
+        this.scrollable=scrollable;
     }
 
     private void init(Context context, AttributeSet attrs){
@@ -174,7 +182,7 @@ public class BarChart extends View {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
                                 float distanceX, float distanceY) {
-            if (scrollable && !touchable){
+            if (scrollable){
                 offset_x = offset_x + (int) (distanceX * scroll_rate);
                 Log.e("onScroll","x:  "+offset_x);
                 BarChart.this.scrollBy((int) (distanceX * scroll_rate), 0);
@@ -196,7 +204,7 @@ public class BarChart extends View {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            if (touchable && !scrollable) {
+            if (touchable) {
                 int x = (int) e.getRawX();
                 int y = (int) e.getY();
                 currentTouchIndexY = y;

@@ -20,7 +20,7 @@
             android:textSize="20dp"
             android:text="BarChart"/>
         <TextView
-            android:text="带点击提示，可滑动（滑动与点击功能互相冲突，未修复）"
+            android:text="带点击提示，可滑动(需测试滑动后点击位置是否偏移，有无bug)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"/>
