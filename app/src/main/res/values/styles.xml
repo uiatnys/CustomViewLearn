@@ -16,6 +16,9 @@
         <attr name="bottom_textsize" format="dimension"></attr>   <!--X轴字体大小-->
         <attr name="bar_width" format="dimension"></attr>    <!--单个柱宽度-->
         <attr name="bar_interval" format="dimension"></attr>      <!--柱之间间隔-->
+        <attr name="scrollable" format="boolean"></attr>   <!--是否可左右滑动-->
+        <attr name="chart_backgroudcolor" format="dimension"></attr>   <!--图表背景颜色-->
+        <attr name="touchable" format="boolean"></attr>  <!--柱状图是否可点击-->
     </declare-styleable>
 
 </resources>
