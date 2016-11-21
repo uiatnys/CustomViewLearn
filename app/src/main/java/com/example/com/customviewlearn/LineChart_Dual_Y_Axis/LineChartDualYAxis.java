@@ -16,4 +16,9 @@ public class LineChartDualYAxis extends View {
     public LineChartDualYAxis(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 }
