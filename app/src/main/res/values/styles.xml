@@ -21,4 +21,9 @@
         <attr name="touchable" format="boolean"></attr>  <!--柱状图是否可点击-->
     </declare-styleable>
 
+    <declare-styleable name="LineChartDualYAxis">
+        <attr name="line_height" format="dimension"></attr>  <!--线条高度-->
+        <attr name="line_textsize" format="dimension"></attr>  <!--线条文字大小-->
+        <attr name="axis_textsize" format="dimension"></attr>  <!--数轴文字大小-->
+    </declare-styleable>
 </resources>
