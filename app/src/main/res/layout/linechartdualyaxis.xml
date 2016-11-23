@@ -8,10 +8,10 @@
     <com.example.com.customviewlearn.LineChart_Dual_Y_Axis.LineChartDualYAxis
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingTop="20dp"
-        app:axis_textsize="14dp"
-        app:line_textsize="16dp"
-        app:line_height="10dp"/>
+        app:axis_textsize="12dp"
+        app:line_textsize="8dp"
+        app:line_height="1dp"/>
 </LinearLayout>

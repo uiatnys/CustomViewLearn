@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -28,6 +29,7 @@ public class LineChartDualYAxis extends View {
 
     private Paint paint;
     private TextPaint textPaint;
+    private Path path;
     private int[] values;
 
     public LineChartDualYAxis(Context context) {
@@ -48,8 +50,9 @@ public class LineChartDualYAxis extends View {
         }
         paint = new Paint();
         textPaint=new TextPaint();
-        values=new int[30];
-        for (int i=0;i<30;i++){
+        path=new Path();
+        values=new int[20];
+        for (int i=0;i<20;i++){
             values[i]=getRandom();
         }
     }
@@ -59,7 +62,7 @@ public class LineChartDualYAxis extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         width=MeasureSpec.getSize(widthMeasureSpec);
-        height=MeasureSpec.getSize(heightMeasureSpec);
+        height= (int) (width*1.2f);
         setMeasuredDimension(width,height);
     }
 
@@ -70,16 +73,49 @@ public class LineChartDualYAxis extends View {
         xLineLength=width-getPaddingRight()-getPaddingLeft();
         yRelativeValue = (int)(height*0.9f);
         xRelativeValue = getPaddingLeft()+50;
+        paint.setAntiAlias(true);
         paint.setColor(0xff696969);
+        textPaint.setColor(0xff696969);
+        textPaint.setTextSize(axisTextSize);
         canvas.drawLine(xRelativeValue,yRelativeValue,xRelativeValue,getPaddingTop(),paint);
         canvas.drawLine(xLineLength,yRelativeValue,xLineLength,getPaddingTop(),paint);
+        for(int i=0;i<=7;i++){
+            if (i==0){
+                canvas.drawLine(xRelativeValue,yRelativeValue,xLineLength,yRelativeValue,paint);
+            }else {
+                paint.setColor(0xffBEBEBE);
+                canvas.drawLine(xRelativeValue,yRelativeValue-150*i,xLineLength,yRelativeValue-150*i,paint);
+            }
+            canvas.drawText(i*100+"",getPaddingLeft()-20,yRelativeValue-150*i,textPaint);
+            canvas.drawText(i*100+"",xLineLength+10,yRelativeValue-150*i,textPaint);
+        }
+        path.moveTo(xRelativeValue,yRelativeValue-values[0]);
+        float xPosition=xRelativeValue;
+        float interval=xLineLength/values.length;
+        xPosition+=interval;
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(0xffBEBEBE);
+        textPaint.setTextSize(lineHeight*10);
+        paint.setStrokeWidth(lineHeight*2);
+        for(int i=1;i<values.length;i++){
+            if (xPosition<xLineLength){
+                path.lineTo(xPosition,yRelativeValue-values[i]*1.5f);
+                path.moveTo(xPosition,yRelativeValue-values[i]*1.5f);
+                canvas.drawPoint(xPosition,yRelativeValue-values[i]*1.5f,paint);
+                canvas.drawText(values[i]+"",xPosition-5,yRelativeValue-values[i]*1.5f,textPaint);
+            }
+            xPosition+=interval;
+        }
+        paint.setColor(0xff191919);
+        paint.setStrokeWidth(lineHeight);
+        canvas.drawPath(path,paint);
     }
 
     /**
-     * 返回0-100的随机整数
+     * 返回0-700的随机整数
      * @return
      */
     private int getRandom(){
-        return (int)(Math.random()*1000);
+        return (int)(Math.random()*1000%700);
     }
 }
